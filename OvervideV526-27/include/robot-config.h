@@ -6,6 +6,7 @@ extern brain Brain;
 //extern motor LeftFront;
 
 //Add your devices below, and don't forget to do the same in robot-config.cpp:
+//header file
 
 extern motor LeftFront;
 extern motor LeftBack;
@@ -21,8 +22,6 @@ extern motor_group LeftDrive;
 extern motor_group RightDrive;
 extern motor_group Lift;
 
-extern inertial Gyro;
-
-controller Controller1 = controller(primary);
+extern controller Controller1;
 
 void  vexcodeInit( void );

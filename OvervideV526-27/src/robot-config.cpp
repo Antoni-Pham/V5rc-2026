@@ -26,8 +26,6 @@ motor_group LeftDrive = motor_group(LeftFront, LeftBack);
 motor_group RightDrive = motor_group(RightFront, RightBack);
 motor_group Lift = motor_group(Lift1, Lift2);
 
-inertial Gyro = inertial(PORT21);
-
 controller Controller1 = controller(primary);
 
 void vexcodeInit( void ) {
