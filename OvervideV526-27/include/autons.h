@@ -7,6 +7,7 @@ extern Drive chassis;
 
 void default_constants();
 
+void far_score();
 void drive_test();
 void turn_test();
 void swing_test();

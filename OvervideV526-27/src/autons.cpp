@@ -8,18 +8,24 @@
  * exit conditions, check the docs.
  */
 
-
-
 void default_constants(){
   // Each constant set is in the form of (maxVoltage, kP, kI, kD, startI).
-  chassis.set_drive_constants(10, 1.5, 0, 10, 0);
-  chassis.set_heading_constants(6, .4, 0, 1, 0);
-  chassis.set_turn_constants(12, .4, .03, 3, 15);
+  //24 inches
+  //chassis.set_drive_constants(10, 1.1, 0, 6.5, 0);
+  //chassis.set_drive_constants(10, 1, 0, 6, 0);
+  //chassis.set_drive_constants(10, 1.5, 0, 11.25, 0);
+  //chassis.set_drive_constants(10, 2|
+  // 0-p 0, 16, 0);
+  //90degrees
+  
+  chassis.set_drive_constants(10, 1.1, 0, 6.5, 0);
+  chassis.set_heading_constants(0.5, 0.5, 0, 1.1, 0);
+  chassis.set_turn_constants(12, .2, 0, 1.1, 0);
   chassis.set_swing_constants(12, .3, .001, 2, 15);
 
-  // Each exit condition set is in the form of (settle_error, settle_time, timeout).
+  // Each exit condition set is in the form of (sett  le_error, settle_time, timeout).
   chassis.set_drive_exit_conditions(1.5, 300, 5000);
-  chassis.set_turn_exit_conditions(1, 300, 3000);
+  chassis.set_turn_exit_conditions(1, 300, 3000); 
   chassis.set_swing_exit_conditions(1, 300, 3000);
 }
 
@@ -41,6 +47,15 @@ void odom_constants(){
 /**
  * The expected behavior is to return to the start position.
  */
+
+void far_score(){
+  chassis.drive_distance(10);
+  Intake.setVelocity(80, percent);
+  Intake.spin(forward);
+  Claw.setVelocity(80, percent);
+  Claw.spin(forward);
+  chassis.drive_with_voltage(3.5, 4);
+}
 
 void drive_test(){
   chassis.drive_distance(6);
@@ -98,7 +113,7 @@ void odom_test(){
     Brain.Screen.printAt(5,60, "Heading: %f", chassis.get_absolute_heading());
     Brain.Screen.printAt(5,80, "ForwardTracker: %f", chassis.get_ForwardTracker_position());
     Brain.Screen.printAt(5,100, "SidewaysTracker: %f", chassis.get_SidewaysTracker_position());
-    task::sleep(20);
+    vex::this_thread::sleep_for(20);
   }
 }
 

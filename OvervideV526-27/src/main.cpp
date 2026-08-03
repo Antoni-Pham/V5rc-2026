@@ -38,15 +38,15 @@ Drive chassis(
 //HOLONOMIC_TWO_ROTATION
 //
 //Write it here:
-ZERO_TRACKER_ODOM,
+ZERO_TRACKER_NO_ODOM,
 
 //Add the names of your Drive motors into the motor groups below, separated by commas, i.e. motor_group(Motor1,Motor2,Motor3).
 //You will input whatever motor names you chose when you configured your robot using the sidebar configurer, they don't have to be "Motor1" and "Motor2".
 
 //Left Motors:
-LeftDrive,
+motor_group(LeftFront, LeftBack),
 //Right Motors:
-RightDrive,
+motor_group(RightFront, RightBack),
 
 //Specify the PORT NUMBER of your inertial sensor, in PORT format (i.e. "PORT1", not simply "1"):
 PORT21,
@@ -61,7 +61,7 @@ PORT21,
 
 //Gyro scale, this is what your gyro reads when you spin the robot 360 degrees.
 //For most cases 360 will do fine here, but this scale factor can be very helpful when precision is necessary.
-360,
+356.67,
 
 /*---------------------------------------------------------------------------*/
 /*                                  PAUSE!                                   */
@@ -118,6 +118,10 @@ void pre_auton() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   default_constants();
+  chassis.Gyro.calibrate();
+  while(chassis.Gyro.isCalibrating()){
+    vex::this_thread::sleep_for(10);
+  }
 
   while(!auto_started){
     Brain.Screen.clearScreen();
@@ -174,7 +178,7 @@ void autonomous(void) {
   auto_started = true;
   switch(current_auton_selection){ 
     case 0:
-      drive_test();
+      far_score();
       break;
     case 1:         
       drive_test();
@@ -212,6 +216,7 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
+
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -221,11 +226,30 @@ void usercontrol(void) {
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
-
+    
+    if(Controller1.ButtonL1.pressing()){
+      Intake.spin(forward);
+    } else if(Controller1.ButtonL2.pressing()){
+      Intake.spin(reverse);
+    } else {
+      Intake.stop();
+    }
+    if (Controller1.ButtonR2.pressing()){
+      if (Clawlift.position(degrees) < 340){
+        Lift.spinToPosition(90, degrees, false);
+        Clawlift.spinToPosition(380, degrees, false);
+      } else if (Lift.position(degrees) > 900)
+      {
+        Lift.spin(forward);
+      }
+    } else if (Controller1.ButtonR1.pressing()){
+      if (Clawlift.position(degrees) > 340 && Lift.position(degrees) < 5){
+        Lift.spin(reverse);
+      } 
+    }
     //Replace this line with chassis.control_tank(); for tank drive 
     //or chassis.control_holonomic(); for holo drive.
     chassis.control_arcade();
-
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
@@ -247,4 +271,3 @@ int main() {
     wait(100, msec);
   }
 }
-

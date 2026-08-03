@@ -6,7 +6,6 @@ extern brain Brain;
 //extern motor LeftFront;
 
 //Add your devices below, and don't forget to do the same in robot-config.cpp:
-//header file
 
 extern motor LeftFront;
 extern motor LeftBack;
@@ -18,8 +17,6 @@ extern motor Intake;
 extern motor Claw;
 extern motor Clawlift;
 
-extern motor_group LeftDrive;
-extern motor_group RightDrive;
 extern motor_group Lift;
 
 extern controller Controller1;

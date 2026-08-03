@@ -12,18 +12,16 @@ brain Brain;
 
 //Add your devices below, and don't forget to do the same in robot-config.h:
 
-motor LeftFront = motor(PORT13, ratio6_1, false);
-motor LeftBack = motor(PORT14, ratio6_1, false);
-motor RightFront = motor(PORT11, ratio6_1, true);
-motor RightBack = motor(PORT12, ratio6_1, true);
+motor LeftFront = motor(PORT11, ratio6_1, true);
+motor LeftBack = motor(PORT12, ratio6_1, true);
+motor RightFront = motor(PORT13, ratio6_1, false);
+motor RightBack = motor(PORT14, ratio6_1, false);
 motor Lift1 = motor(PORT18, ratio18_1, true);
 motor Lift2 = motor(PORT19, ratio18_1, false);
 motor Intake = motor(PORT20, ratio6_1, true);
 motor Claw = motor(PORT4, ratio18_1, true);
 motor Clawlift = motor(PORT3, ratio18_1, true);
 
-motor_group LeftDrive = motor_group(LeftFront, LeftBack);
-motor_group RightDrive = motor_group(RightFront, RightBack);
 motor_group Lift = motor_group(Lift1, Lift2);
 
 controller Controller1 = controller(primary);
