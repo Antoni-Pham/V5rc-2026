@@ -121,6 +121,8 @@ void competition15second(){
   Lift.spinToPosition(900,degrees,true);
   Clawlift.spinToPosition(560,degrees, false);
   chassis.drive_with_voltage(4,4);
+  wait(300,msec);
+  chassis.drive_stop(coast);
 
   
 
