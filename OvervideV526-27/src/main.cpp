@@ -134,6 +134,7 @@ void pre_auton() {
     switch(current_auton_selection){
       case 0:
         Brain.Screen.printAt(5, 140, "Auton 1");
+        
         break;
       case 1:
         Brain.Screen.printAt(5, 140, "Auton 2");
@@ -178,7 +179,7 @@ void autonomous(void) {
   auto_started = true;
   switch(current_auton_selection){ 
     case 0:
-      far_score();
+      competition15second();
       break;
     case 1:         
       drive_test();

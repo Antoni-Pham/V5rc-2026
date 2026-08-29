@@ -64,6 +64,24 @@ void drive_test(){
   chassis.drive_distance(-36);
 }
 
+void competition15second(){
+  Lift.setVelocity(80,percent);
+  Clawlift.setVelocity(80,percent);
+  Clawlift.setPosition(0,degrees);
+  Claw.setVelocity(40, percent);
+  Lift.spinToPosition(100,degrees,true);
+  Claw.spin(forward);
+  Clawlift.spinToPosition(420, degrees,true);
+  chassis.drive_with_voltage(-6,-6);
+  Lift.spinToPosition(40,degrees,false);
+  wait(500, msec);
+  chassis.drive_with_voltage(-2,-2);
+  Claw.spin(reverse);
+  chassis.drive_with_voltage(-3,-3);
+  
+  
+  
+}
 /**
  * The expected behavior is to return to the start angle, after making a complete turn.
  */

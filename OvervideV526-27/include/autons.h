@@ -6,6 +6,7 @@ class Drive;
 extern Drive chassis;
 
 void default_constants();
+void competition15second();
 
 void far_score();
 void drive_test();
