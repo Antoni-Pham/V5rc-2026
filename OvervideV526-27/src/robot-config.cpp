@@ -21,6 +21,7 @@ motor Lift2 = motor(PORT8, ratio6_1, false);
 motor Intake = motor(PORT20, ratio6_1, true);
 motor Claw = motor(PORT10, ratio18_1, true);
 motor Clawlift = motor(PORT9, ratio18_1, false);
+inertial Inertialsensor = PORT21;
 
 motor_group Lift = motor_group(Lift1, Lift2);
 

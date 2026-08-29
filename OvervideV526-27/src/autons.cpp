@@ -20,7 +20,7 @@ void default_constants(){
   
   chassis.set_drive_constants(10, 1.1, 0, 6.5, 0);
   chassis.set_heading_constants(0.5, 0.5, 0, 1.1, 0);
-  chassis.set_turn_constants(12, .2, 0, 1.1, 0);
+  chassis.set_turn_constants(12, .25, 0, 1.1, 0);
   chassis.set_swing_constants(12, .3, .001, 2, 15);
 
   // Each exit condition set is in the form of (sett  le_error, settle_time, timeout).
@@ -65,20 +65,68 @@ void drive_test(){
 }
 
 void competition15second(){
+
   Lift.setVelocity(80,percent);
   Clawlift.setVelocity(80,percent);
   Clawlift.setPosition(0,degrees);
   Claw.setVelocity(40, percent);
   Lift.spinToPosition(100,degrees,true);
   Claw.spin(forward);
-  Clawlift.spinToPosition(420, degrees,true);
+  Clawlift.spinToPosition(430, degrees,true);
   chassis.drive_with_voltage(-6,-6);
-  Lift.spinToPosition(40,degrees,false);
-  wait(500, msec);
+  Lift.spinToPosition(0,degrees,false);
+  wait(400, msec);
   chassis.drive_with_voltage(-2,-2);
+  wait(300, msec);
   Claw.spin(reverse);
-  chassis.drive_with_voltage(-3,-3);
+  wait(600,msec);
+  Claw.stop();
+  chassis.drive_with_voltage(8,10);
+  wait(1000,msec);
+  chassis.drive_distance(-6);
+  chassis.drive_with_voltage(10,10);;
+  wait(600,msec);
+  // chassis.drive_distance(-5);
+  // chassis.drive_with_voltage(10,10);;
+  // wait(600,msec);
+  chassis.set_heading(0);
+  chassis.drive_distance(-5);
+  chassis.set_turn_exit_conditions(1, 300, 1000); 
+  chassis.turn_to_angle(85); 
+  Clawlift.spinToPosition(600,degrees,true);
+  Lift.spinToPosition(190,degrees,true);  
+  chassis.drive_distance(-30);
+  chassis.turn_to_angle(35);
+  chassis.drive_with_voltage(-4,-4);
+  wait(300,msec);
+  chassis.drive_with_voltage(-2,-2);
+  wait(900,msec);
+  chassis.drive_with_voltage(0,0);
+  wait(100,msec);
+  Claw.spin(forward);
+  chassis.drive_distance(2);
+  Lift.spinToPosition(0,degrees,true);
+  Clawlift.spinToPosition(260,degrees,true);
+  wait(300,msec);
+  Clawlift.spinToPosition(440,degrees, false);
+  Lift.spinToPosition(800,degrees,true);
+  chassis.turn_to_angle(270);
+  chassis.drive_with_voltage(-8,-8);
+  wait(400,msec);
+  chassis.drive_with_voltage(-4,-4);
+  wait(400,msec);
+  Lift.spinToPosition(400,degrees,false);
+  Claw.spin(reverse);
+  wait(1000,msec);
+  Lift.spinToPosition(800,degrees,true);
+  Clawlift.spinToPosition(560,degrees, false);
   
+
+
+  
+
+  
+
   
   
 }
