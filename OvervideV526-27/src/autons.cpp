@@ -20,12 +20,12 @@ void default_constants(){
   
   chassis.set_drive_constants(10, 1.1, 0, 6.5, 0);
   chassis.set_heading_constants(0.5, 0.5, 0, 1.1, 0);
-  chassis.set_turn_constants(12.7, .25, 0, 1.3, 0);
+  chassis.set_turn_constants(12.7, .3, 0, 1.3, 0);
   chassis.set_swing_constants(12, .3, .001, 2, 15);
 
   // Each exit condition set is in the form of (sett  le_error, settle_time, timeout).
   chassis.set_drive_exit_conditions(1, 50, 5000);
-  chassis.set_turn_exit_conditions(1.7, 50, 3000); 
+  chassis.set_turn_exit_conditions(2, 50, 1000); 
   chassis.set_swing_exit_conditions(1, 50, 3000);
 }
 
@@ -68,35 +68,41 @@ void InsideScore2yellowFar(){
   Lift.setVelocity(80,percent);
   Clawlift.setVelocity(80,percent);
   Clawlift.setPosition(0,degrees);
-  Claw.setVelocity(40, percent);
-  Lift.spinToPosition(100,degrees,true);
+  Claw.setVelocity(100, percent);
+  Lift.spinToPosition(-200,degrees,false);
   Claw.spin(forward);
-  Clawlift.spinToPosition(430, degrees,true);
-  chassis.drive_with_voltage(-6,-6);
+  Clawlift.spinToPosition(430, degrees,false);
+  //setup drive adn toggle
+  chassis.drive_distance(-4);
+  chassis.drive_with_voltage(10,10);
   Lift.spinToPosition(0,degrees,false);
-  wait(400, msec);
+  vex::wait(500,msec);
+  chassis.drive_distance(-3);
+  chassis.drive_with_voltage(10,10);
+  vex::wait(300,msec);
+  chassis.drive_distance(-14);
+  //Score yellow prelaod
+  chassis.turn_to_angle(90);
+  chassis.drive_with_voltage(-8,-8);
+  wait(700,msec);
   chassis.drive_with_voltage(-2,-2);
-  wait(300, msec);
   Claw.spin(reverse);
-  wait(600,msec);
-  Claw.stop();
-  chassis.drive_with_voltage(8,10);
-  wait(1000,msec);
-  chassis.drive_distance(-6);
-  chassis.drive_with_voltage(10,10);;
-  wait(600,msec);
-  // chassis.drive_distance(-5);
-  // chassis.drive_with_voltage(10,10);;
-  // wait(600,msec);
-  chassis.set_heading(0);
-  chassis.drive_distance(-15);
-  chassis.set_turn_exit_conditions(1, 300, 1000); 
+  wait(500,msec);
+  Lift.spinToPosition(400,degrees,false);
+  chassis.drive_distance(4);
+  chassis.turn.
+  
+  
+  
+  
+
 
 
 }
 
 void InsideScore2yellow(){
 
+  //Score preload
   Lift.setVelocity(80,percent);
   Clawlift.setVelocity(80,percent);
   Clawlift.setPosition(0,degrees);
@@ -104,19 +110,20 @@ void InsideScore2yellow(){
   Lift.spinToPosition(100,degrees,true);
   Claw.spin(forward);
   Clawlift.spinToPosition(430, degrees,true);
+  //Toggle
   chassis.drive_with_voltage(-6,-6);
   Lift.spinToPosition(0,degrees,false);
-  wait(400, msec);
+  vex::wait(400, msec);
   chassis.drive_with_voltage(-2,-2);
-  wait(300, msec);
+  vex::wait(300, msec);
   Claw.spin(reverse);
-  wait(600,msec);
+  vex::wait(600,msec);
   Claw.stop();
   chassis.drive_with_voltage(8,8);
-  wait(1000,msec);
+  vex::wait(1000,msec);
   chassis.drive_distance(-6);
   chassis.drive_with_voltage(10,10);;
-  wait(600,msec);
+  vex::wait(600,msec);
   // chassis.drive_distance(-5);
   // chassis.drive_with_voltage(10,10);;
   // wait(600,msec);

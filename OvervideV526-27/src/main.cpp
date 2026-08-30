@@ -104,7 +104,7 @@ PORT22,     -PORT22,
 
 );
 
-int current_auton_selection = 0;
+int current_auton_selection = 1;
 bool auto_started = false;
 
 /**
@@ -182,7 +182,7 @@ void autonomous(void) {
       InsideScore2yellow();
       break;
     case 1:         
-      drive_test();
+      InsideScore2yellowFar();
       break;
     case 2:
       turn_test();
