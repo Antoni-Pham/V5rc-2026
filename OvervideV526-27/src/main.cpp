@@ -179,7 +179,7 @@ void autonomous(void) {
   auto_started = true;
   switch(current_auton_selection){ 
     case 0:
-      competition15second();
+      InsideScore2yellow();
       break;
     case 1:         
       drive_test();

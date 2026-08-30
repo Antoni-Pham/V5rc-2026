@@ -20,13 +20,13 @@ void default_constants(){
   
   chassis.set_drive_constants(10, 1.1, 0, 6.5, 0);
   chassis.set_heading_constants(0.5, 0.5, 0, 1.1, 0);
-  chassis.set_turn_constants(12, .25, 0, 1.1, 0);
+  chassis.set_turn_constants(12.7, .25, 0, 1.3, 0);
   chassis.set_swing_constants(12, .3, .001, 2, 15);
 
   // Each exit condition set is in the form of (sett  le_error, settle_time, timeout).
-  chassis.set_drive_exit_conditions(1.5, 300, 5000);
-  chassis.set_turn_exit_conditions(1, 300, 3000); 
-  chassis.set_swing_exit_conditions(1, 300, 3000);
+  chassis.set_drive_exit_conditions(1, 50, 5000);
+  chassis.set_turn_exit_conditions(1.7, 50, 3000); 
+  chassis.set_swing_exit_conditions(1, 50, 3000);
 }
 
 /**
@@ -64,8 +64,7 @@ void drive_test(){
   chassis.drive_distance(-36);
 }
 
-void competition15second(){
-
+void InsideScore2yellowFar(){
   Lift.setVelocity(80,percent);
   Clawlift.setVelocity(80,percent);
   Clawlift.setPosition(0,degrees);
@@ -90,9 +89,40 @@ void competition15second(){
   // chassis.drive_with_voltage(10,10);;
   // wait(600,msec);
   chassis.set_heading(0);
-  chassis.drive_distance(-5);
+  chassis.drive_distance(-15);
   chassis.set_turn_exit_conditions(1, 300, 1000); 
-  chassis.turn_to_angle(85); 
+
+
+}
+
+void InsideScore2yellow(){
+
+  Lift.setVelocity(80,percent);
+  Clawlift.setVelocity(80,percent);
+  Clawlift.setPosition(0,degrees);
+  Claw.setVelocity(40, percent);
+  Lift.spinToPosition(100,degrees,true);
+  Claw.spin(forward);
+  Clawlift.spinToPosition(430, degrees,true);
+  chassis.drive_with_voltage(-6,-6);
+  Lift.spinToPosition(0,degrees,false);
+  wait(400, msec);
+  chassis.drive_with_voltage(-2,-2);
+  wait(300, msec);
+  Claw.spin(reverse);
+  wait(600,msec);
+  Claw.stop();
+  chassis.drive_with_voltage(8,8);
+  wait(1000,msec);
+  chassis.drive_distance(-6);
+  chassis.drive_with_voltage(10,10);;
+  wait(600,msec);
+  // chassis.drive_distance(-5);
+  // chassis.drive_with_voltage(10,10);;
+  // wait(600,msec);
+  chassis.set_heading(0);
+  chassis.drive_distance(-5);
+  chassis.turn_to_angle(85, 12, 2, 50, 2000); 
   Clawlift.spinToPosition(600,degrees,true);
   Lift.spinToPosition(190,degrees,true);  
   chassis.drive_distance(-30);
@@ -117,7 +147,8 @@ void competition15second(){
   wait(400,msec);
   Lift.spinToPosition(400,degrees,false);
   Claw.spin(reverse);
-  wait(200,msec);
+  wait(400,msec);
+  Claw.stop();
   Lift.spinToPosition(900,degrees,true);
   Clawlift.spinToPosition(560,degrees, false);
   chassis.drive_with_voltage(4,4);
