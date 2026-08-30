@@ -69,7 +69,7 @@ void InsideScore2yellowFar(){
   Clawlift.setVelocity(80,percent);
   Clawlift.setPosition(0,degrees);
   Claw.setVelocity(100, percent);
-  Lift.spinToPosition(-200,degrees,false);
+  Lift.spinToPosition(-415,degrees,false);
   Claw.spin(forward);
   Clawlift.spinToPosition(430, degrees,false);
   //setup drive adn toggle
@@ -83,14 +83,16 @@ void InsideScore2yellowFar(){
   chassis.drive_distance(-14);
   //Score yellow prelaod
   chassis.turn_to_angle(90);
+  Lift.spinToPosition(0,degrees,false);
   chassis.drive_with_voltage(-8,-8);
   wait(700,msec);
   chassis.drive_with_voltage(-2,-2);
   Claw.spin(reverse);
-  wait(500,msec);
+  wait(650,msec);
   Lift.spinToPosition(400,degrees,false);
-  chassis.drive_distance(4);
-  chassis.turn.
+  chassis.drive_distance(5);
+  chassis.turn_to_angle(40);
+  
   
   
   
