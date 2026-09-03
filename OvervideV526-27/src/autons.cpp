@@ -142,6 +142,7 @@ void Red1Blue1AutoandPin(){
   chassis.drive_distance(-15);
   //Score yellow prelaod
   chassis.turn_to_angle(90);
+  Lift.spinToPosition(0,degrees,false);
   chassis.drive_with_voltage(-8,-8);
   wait(700,msec);
   chassis.drive_with_voltage(-2,-2);
@@ -176,6 +177,10 @@ void Red1Blue1AutoandPin(){
   wait(500,msec);
   Lift.spinToPosition(800,degrees,true);
   Claw.stop();
+  wait(650,msec);
+  Lift.spinToPosition(400,degrees,false);
+  chassis.drive_distance(5);
+  chassis.turn_to_angle(40);
 }
 
 
