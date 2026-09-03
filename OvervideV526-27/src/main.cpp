@@ -1,5 +1,4 @@
 #include "vex.h"
-
 using namespace vex;
 competition Competition;
 
@@ -163,7 +162,7 @@ void pre_auton() {
     } else if (current_auton_selection == 8){
       current_auton_selection = 0;
     }
-
+    task::sleep(10);
   }
 }
 
@@ -244,8 +243,32 @@ void usercontrol(void) {
 //       holonomic_odom_test();
 //       break;
 //  }
-bool intakeOn = false;
+  bool clawLiftOn = false;
+  bool brainTimerOn = false;
+  bool liftOn = false;
+  bool buttonL1Pressed = false;
+  bool buttonL2Pressed = false;
+  bool intakeOn = false;
+  bool scoringUsed = false;
+  bool runningSequence = false;
+  Lift.setStopping(hold);
+  Lift.setVelocity(80.0, percent);
+  Lift.setMaxTorque(100.0, percent);
+  Claw.setVelocity(100.0, percent);
+  Claw.setStopping(coast);
+  Clawlift.setVelocity(80.0, percent);
+  Lift.setMaxTorque(100.0, percent);
+  Clawlift.setStopping(coast);
+  Intake.setVelocity(100.0, percent);
+  Intake.setStopping(coast);
+
   while (1) {
+    chassis.control_arcade();
+    if (Brain.Timer.value() > 1.5 && brainTimerOn == true){
+      Clawlift.stop();
+      Clawlift.setPosition(0, degrees);
+      brainTimerOn = false;
+    }
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -254,40 +277,109 @@ bool intakeOn = false;
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
+    if (scoringUsed == false){
+      if(!Controller1.ButtonL1.pressing() && buttonL1Pressed){
+        buttonL1Pressed = false;
+      }
+      if(!Controller1.ButtonL2.pressing() && buttonL2Pressed){
+        Intake.spin(forward);
+        buttonL1Pressed = false;
+        buttonL2Pressed = false;
+      }
+      if(Controller1.ButtonL1.pressing() && !intakeOn && !buttonL1Pressed){
+        buttonL1Pressed = true;
+        Intake.spin(forward);
+        intakeOn = true;
+      } else if(Controller1.ButtonL1.pressing() && intakeOn && !buttonL1Pressed){
+        buttonL1Pressed = true;
+        Intake.stop();
+        intakeOn = false;
+      } else if(Controller1.ButtonL2.pressing() && intakeOn && !buttonL2Pressed){
+        buttonL2Pressed = true;
+        Intake.spin(reverse);
+        buttonL1Pressed = true;
+      }
     
-    if(Controller1.ButtonL1.pressing() && !intakeOn){
-      Intake.spin(forward);
-      intakeOn = true;
-    } else if(Controller1.ButtonL1.pressing() && intakeOn){
-      Intake.stop();
-      intakeOn = false;
-    } else if(Controller1.ButtonL2.pressing() && intakeOn){
-      Intake.spin(reverse);
-      vex::wait(1000,msec);
-      while(Controller1.ButtonL2.pressing()) {
-        vex::wait(20,msec);
-      }
-      Intake.spin(forward);
-    }
-    if (Controller1.ButtonR2.pressing()){
-      if (Clawlift.position(degrees) < 340){
-        Lift.spinToPosition(90, degrees, false);
-        Clawlift.spinToPosition(380, degrees, false);
-      } else if (Lift.position(degrees) > 900)
-      {
-        Lift.spin(forward);
-      }
-    } else if (Controller1.ButtonR1.pressing()){
-      if (Clawlift.position(degrees) > 340 && Lift.position(degrees) < 5){
-        Lift.spin(reverse);
+      if (Controller1.ButtonR2.pressing() && !brainTimerOn){
+        Intake.stop();
+        scoringUsed = true;
+        Clawlift.setStopping(hold);
+        Clawlift.spinToPosition(540, degrees, false);
+        Claw.spin(forward);
       } 
     }
-    //Replace this line with chassis.control_tank(); for tank drive 
-    //or chassis.control_holonomic(); for holo drive.
-    chassis.control_arcade();
-    vex::wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
+    if (scoringUsed == true){
+      if (!Controller1.ButtonL1.pressing() && !Controller1.ButtonL2.pressing() && clawLiftOn == true){
+        Clawlift.stop();
+        clawLiftOn = false;
+      }
+      if(Controller1.ButtonL1.pressing()){
+        Clawlift.spin(forward);
+        clawLiftOn = true;
+      } else if(Controller1.ButtonL2.pressing()){
+        Clawlift.spin(reverse);
+        clawLiftOn = true;
+      }
+      if(Lift.position(degrees) <= 5 && Controller1.ButtonR1.pressing())
+      {
+        Lift.stop();
+        liftOn = false;
+      }
+      if (!Controller1.ButtonR2.pressing() && !Controller1.ButtonR1.pressing() && liftOn == true){
+        Lift.stop();
+        liftOn = false;
+      }
+      if (Controller1.ButtonR2.pressing() && liftOn == false){
+        Lift.spin(forward);
+        liftOn = true;
+      } else if (Controller1.ButtonR1.pressing() && liftOn == false){
+        if (Lift.position(degrees) > 5){
+          Lift.spin(reverse);
+          liftOn = true;
+        } 
+     }
+     if (Controller1.ButtonX.pressing()){
+       chassis.drive_with_voltage(0.0, 0.0);
+       Claw.spin(reverse);
+       wait(0.4, seconds);
+       Lift.spin(forward);
+       wait(0.3, seconds);
+       Clawlift.spin(forward);
+       wait(0.4, seconds);
+       Clawlift.stop();
+       Claw.stop();
+       wait(0.2, seconds);
+       Lift.stop();
+       waitUntil((Controller1.Axis3.position() > 50.0));
+       chassis.drive_with_voltage(3.0, 3.0);
+       wait(0.2, seconds);
+       chassis.drive_with_voltage(0.0, 0.0);
+       Lift.spinToPosition(140.0, degrees, false);
+       runningSequence = true;
+      }
+
+      if (Controller1.ButtonA.pressing()){
+        Lift.spinToPosition(140.0, degrees, false);
+        runningSequence = true;
+      } 
+      if (runningSequence == true && Lift.position(degrees) < 145.0){
+        Lift.setStopping(hold);
+        Brain.Timer.clear();
+        brainTimerOn = true;
+        Clawlift.spin(reverse);
+        Claw.stop();
+        Intake.stop();
+        Clawlift.setStopping(coast);
+        runningSequence = false;
+        scoringUsed = false;
+      }
+    }
   }
+  //Replace this line with chassis.control_tank(); for tank drive 
+  //or chassis.control_holonomic(); for holo drive.
+    
+  vex::wait(20, msec); // Sleep the task for a short amount of time to
+                    // prevent wasted resources.
 }
 
 //
