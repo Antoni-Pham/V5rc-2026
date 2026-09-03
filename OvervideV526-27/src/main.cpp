@@ -215,6 +215,7 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
+
   // User control code here, inside the loop
 //   vex::this_thread::sleep_for(5000);
 // switch(current_auton_selection){ 
@@ -243,6 +244,7 @@ void usercontrol(void) {
 //       holonomic_odom_test();
 //       break;
 //  }
+bool intakeOn = false;
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -253,12 +255,19 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
     
-    if(Controller1.ButtonL1.pressing()){
+    if(Controller1.ButtonL1.pressing() && !intakeOn){
       Intake.spin(forward);
-    } else if(Controller1.ButtonL2.pressing()){
-      Intake.spin(reverse);
-    } else {
+      intakeOn = true;
+    } else if(Controller1.ButtonL1.pressing() && intakeOn){
       Intake.stop();
+      intakeOn = false;
+    } else if(Controller1.ButtonL2.pressing() && intakeOn){
+      Intake.spin(reverse);
+      vex::wait(1000,msec);
+      while(Controller1.ButtonL2.pressing()) {
+        vex::wait(20,msec);
+      }
+      Intake.spin(forward);
     }
     if (Controller1.ButtonR2.pressing()){
       if (Clawlift.position(degrees) < 340){
