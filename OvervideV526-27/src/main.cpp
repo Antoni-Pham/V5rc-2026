@@ -263,12 +263,6 @@ void usercontrol(void) {
   Intake.setStopping(coast);
 
   while (1) {
-    chassis.control_arcade();
-    if (Brain.Timer.value() > 1.5 && brainTimerOn == true){
-      Clawlift.stop();
-      Clawlift.setPosition(0, degrees);
-      brainTimerOn = false;
-    }
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -277,6 +271,17 @@ void usercontrol(void) {
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
+
+    //Replace this line with chassis.control_tank(); for tank drive 
+    //or chassis.control_holonomic(); for holo drive.
+    chassis.control_arcade();
+
+    if (Brain.Timer.value() > 1.5 && brainTimerOn == true){
+      Clawlift.stop();
+      Clawlift.setPosition(0, degrees);
+      brainTimerOn = false;
+    }
+
     if (scoringUsed == false){
       if(!Controller1.ButtonL1.pressing() && buttonL1Pressed){
         buttonL1Pressed = false;
@@ -374,12 +379,10 @@ void usercontrol(void) {
         scoringUsed = false;
       }
     }
+
+    vex::wait(20, msec); // Sleep the task for a short amount of time to
+                         // prevent wasted resources.
   }
-  //Replace this line with chassis.control_tank(); for tank drive 
-  //or chassis.control_holonomic(); for holo drive.
-    
-  vex::wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
 }
 
 //
