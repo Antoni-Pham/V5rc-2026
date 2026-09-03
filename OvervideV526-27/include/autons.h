@@ -7,6 +7,7 @@ extern Drive chassis;
 
 void default_constants();
 void InsideScore2yellow();
+void InsideScore2yellowFarOtherQuad();
 
 void far_score();
 void drive_test();
@@ -16,4 +17,7 @@ void full_test();
 void odom_test();
 void tank_odom_test();
 void holonomic_odom_test();
-void InsideScore2yellowFar();
+void Red1Blue1AutoandPin();
+void InsideScore2yellow();
+void Red1Blue1Auto();
+void Red2Blue2Auto();

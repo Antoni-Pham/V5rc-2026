@@ -122,7 +122,7 @@ void pre_auton() {
   while(chassis.Gyro.isCalibrating()){
     vex::this_thread::sleep_for(10);
   }
-
+  current_auton_selection = 1;
   while(!auto_started){
     Brain.Screen.clearScreen();
     Brain.Screen.printAt(5, 20, "JAR Template v1.2.0");
@@ -133,14 +133,13 @@ void pre_auton() {
     Brain.Screen.printAt(5, 120, "Selected Auton:");
     switch(current_auton_selection){
       case 0:
-        Brain.Screen.printAt(5, 140, "Auton 1");
         
         break;
       case 1:
-        Brain.Screen.printAt(5, 140, "Auton 2");
+        Brain.Screen.printAt(5, 140, "Auton red1 blue1");
         break;
       case 2:
-        Brain.Screen.printAt(5, 140, "Auton 3");
+        Brain.Screen.printAt(5, 140, "Auton red2 blue2");
         break;
       case 3:
         Brain.Screen.printAt(5, 140, "Auton 4");
@@ -164,7 +163,7 @@ void pre_auton() {
     } else if (current_auton_selection == 8){
       current_auton_selection = 0;
     }
-    vex::this_thread::sleep_for(10);
+
   }
 }
 
@@ -176,16 +175,16 @@ void pre_auton() {
  */
 
 void autonomous(void) {
-  auto_started = true;
+  auto_started = true;                                      
   switch(current_auton_selection){ 
     case 0:
-      InsideScore2yellow();
+      
       break;
     case 1:         
-      InsideScore2yellowFar();
+      Red1Blue1Auto();
       break;
     case 2:
-      turn_test();
+      Red2Blue2Auto();
       break;
     case 3:
       swing_test();
@@ -217,7 +216,33 @@ void autonomous(void) {
 
 void usercontrol(void) {
   // User control code here, inside the loop
-
+//   vex::this_thread::sleep_for(5000);
+// switch(current_auton_selection){ 
+//     case 0:
+      
+//       break;
+//     case 1:         
+//       Red1Blue1Auto();
+//       break;
+//     case 2:
+//       Red2Blue2Auto();
+//       break;
+//     case 3:
+//       swing_test();
+//       break;
+//     case 4:
+//       full_test();
+//       break;
+//     case 5:
+//       odom_test();
+//       break;
+//     case 6:
+//       tank_odom_test();
+//       break;
+//     case 7:
+//       holonomic_odom_test();
+//       break;
+//  }
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo

@@ -64,23 +64,82 @@ void drive_test(){
   chassis.drive_distance(-36);
 }
 
-void InsideScore2yellowFar(){
+void Red1Blue1Auto(){
   Lift.setVelocity(80,percent);
   Clawlift.setVelocity(80,percent);
   Clawlift.setPosition(0,degrees);
+  Lift.setPosition(0,degrees);
   Claw.setVelocity(100, percent);
-  Lift.spinToPosition(-200,degrees,false);
+  Lift.spinToPosition(100,degrees,false);
   Claw.spin(forward);
   Clawlift.spinToPosition(430, degrees,false);
-  //setup drive adn toggle
+  //setup drive and toggle
   chassis.drive_distance(-4);
   chassis.drive_with_voltage(10,10);
   Lift.spinToPosition(0,degrees,false);
   vex::wait(500,msec);
-  chassis.drive_distance(-3);
+  chassis.drive_distance(-5);
   chassis.drive_with_voltage(10,10);
-  vex::wait(300,msec);
-  chassis.drive_distance(-14);
+  vex::wait(400,msec);
+  chassis.drive_distance(-15);
+  //Score yellow prelaod
+  chassis.turn_to_angle(90);
+  chassis.drive_with_voltage(-8,-8);
+  wait(700,msec);
+  chassis.drive_with_voltage(-2,-2);
+  Claw.spin(reverse);
+  wait(800,msec);
+  Claw.stop();
+}
+
+void Red2Blue2Auto(){
+  Lift.setVelocity(80,percent);
+  Clawlift.setVelocity(80,percent);
+  Clawlift.setPosition(0,degrees);
+  Lift.setPosition(0,degrees);
+  Claw.setVelocity(100, percent);
+  Lift.spinToPosition(100,degrees,false);
+  Claw.spin(forward);
+  Clawlift.spinToPosition(430, degrees,false);
+  //setup drive and toggle
+  chassis.drive_distance(-4);
+  chassis.drive_with_voltage(10,10);
+  Lift.spinToPosition(0,degrees,false);
+  vex::wait(500,msec);
+  chassis.drive_distance(-5);
+  chassis.drive_with_voltage(10,10);
+  vex::wait(400,msec);
+  chassis.drive_distance(-15);
+  //Score yellow prelaod
+  chassis.turn_to_angle(270);
+  chassis.drive_with_voltage(-8,-8);
+  wait(700,msec);
+  chassis.drive_with_voltage(-2,-2);
+  Claw.spin(reverse);
+  wait(800,msec);
+  Claw.stop();
+  
+}
+
+
+void Red1Blue1AutoandPin(){
+  Lift.setVelocity(80,percent);
+  Clawlift.setVelocity(80,percent);
+  Clawlift.setPosition(0,degrees);
+  Lift.setPosition(0,degrees);
+  Claw.setVelocity(100, percent);
+  Lift.spinToPosition(100,degrees,false);
+  Claw.spin(forward);
+  Clawlift.spinToPosition(430, degrees,false);
+  //setup drive and toggle
+  chassis.drive_distance(-4);
+  chassis.drive_with_voltage(10,10);
+  Lift.spinToPosition(0,degrees,false);
+  vex::wait(500,msec);
+  chassis.drive_distance(-5);
+  chassis.drive_with_voltage(10,10);
+  vex::wait(400,msec);
+  chassis.drive_distance(-15);
   //Score yellow prelaod
   chassis.turn_to_angle(90);
   chassis.drive_with_voltage(-8,-8);
@@ -88,17 +147,45 @@ void InsideScore2yellowFar(){
   chassis.drive_with_voltage(-2,-2);
   Claw.spin(reverse);
   wait(500,msec);
-  Lift.spinToPosition(400,degrees,false);
+  Lift.spinToPosition(650,degrees,false);
+  chassis.drive_distance(12);
+  chassis.turn_to_angle(40);
+  Clawlift.spinToPosition(475,degrees,true);
+  Claw.spin(forward);
+  chassis.drive_with_voltage(-7,-7); 
+  wait(300,msec);
+  chassis.drive_with_voltage(-5,-5); 
+  wait(200,msec);
+  chassis.drive_with_voltage(-2,-2);
+  wait(850,msec);
+  chassis.drive_stop(coast);
+  Lift.spinToPosition(0,degrees,true);
+  Clawlift.spinToPosition(220,degrees,true);
+  chassis.drive_stop(coast);
+  wait(600,msec);
+  Clawlift.spinToPosition(440,degrees, false);
+  Lift.spinToPosition(1000,degrees,true);
   chassis.drive_distance(4);
-  chassis.turn.
-  
-  
-  
-  
-
-
-
+  Clawlift.spinToPosition(425,degrees,true);
+  chassis.turn_to_angle(135);
+  chassis.drive_with_voltage(-7,-7); 
+  wait(600,msec);
+  Lift.spinToPosition(400,degrees,true);
+  Claw.spin(reverse);
+  chassis.drive_stop(coast);
+  wait(500,msec);
+  Lift.spinToPosition(800,degrees,true);
+  Claw.stop();
 }
+
+
+
+
+
+
+
+
+
 
 void InsideScore2yellow(){
 
@@ -146,7 +233,73 @@ void InsideScore2yellow(){
   Clawlift.spinToPosition(260,degrees,true);
   wait(300,msec);
   Clawlift.spinToPosition(440,degrees, false);
-  Lift.spinToPosition(800,degrees,true);
+  Lift.spinToPosition(850,degrees,true);
+  chassis.turn_to_angle(270);
+  chassis.drive_with_voltage(-8,-8);
+  wait(400,msec);
+  chassis.drive_with_voltage(-4,-4);
+  wait(400,msec);
+  Lift.spinToPosition(400,degrees,false);
+  Claw.spin(reverse);
+  wait(400,msec);
+  Claw.stop();
+  Lift.spinToPosition(900,degrees,true);
+  Clawlift.spinToPosition(560,degrees, false);
+  chassis.drive_with_voltage(4,4);
+  wait(300,msec);
+  chassis.drive_stop(coast);
+
+  
+  
+}
+
+void InsideScore2yellowFarOtherQuad(){
+
+  //Score preload
+  Lift.setVelocity(80,percent);
+  Clawlift.setVelocity(80,percent);
+  Clawlift.setPosition(0,degrees);
+  Claw.setVelocity(40, percent);
+  Lift.spinToPosition(100,degrees,true);
+  Claw.spin(forward);
+  Clawlift.spinToPosition(430, degrees,true);
+  //Toggle
+  chassis.drive_with_voltage(-6,-6);
+  Lift.spinToPosition(0,degrees,false);
+  vex::wait(400, msec);
+  chassis.drive_with_voltage(-2,-2);
+  vex::wait(300, msec);
+  Claw.spin(reverse);
+  vex::wait(600,msec);
+  Claw.stop();
+  chassis.drive_with_voltage(8,8);
+  vex::wait(1000,msec);
+  chassis.drive_distance(-6);
+  chassis.drive_with_voltage(10,10);;
+  vex::wait(600,msec);
+  // chassis.drive_distance(-5);
+  // chassis.drive_with_voltage(10,10);;
+  // wait(600,msec);
+  chassis.set_heading(0);
+  chassis.drive_distance(-5);
+  chassis.turn_to_angle(85, 12, 2, 50, 2000); 
+  Clawlift.spinToPosition(600,degrees,true);
+  Lift.spinToPosition(190,degrees,true);  
+  chassis.drive_distance(-30);
+  chassis.turn_to_angle(35);
+  chassis.drive_with_voltage(-4,-4);
+  wait(300,msec);
+  chassis.drive_with_voltage(-2,-2);
+  wait(900,msec);
+  chassis.drive_with_voltage(0,0);
+  wait(100,msec);
+  Claw.spin(forward);
+  chassis.drive_distance(2);
+  Lift.spinToPosition(0,degrees,true);
+  Clawlift.spinToPosition(260,degrees,true);
+  wait(300,msec);
+  Clawlift.spinToPosition(440,degrees, false);
+  Lift.spinToPosition(850,degrees,true);
   chassis.turn_to_angle(270);
   chassis.drive_with_voltage(-8,-8);
   wait(400,msec);

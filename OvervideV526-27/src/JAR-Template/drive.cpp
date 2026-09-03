@@ -695,7 +695,7 @@ void Drive::control_arcade(){
   DriveR.spin(fwd, to_volt(throttle-turn), volt);
 }
 
-/**
+/** 
  * Controls a chassis with left stick throttle and strafe, and right stick turning.
  * Default deadband is 5.
  */
