@@ -243,6 +243,7 @@ void usercontrol(void) {
 //       holonomic_odom_test();
 //       break;
 //  }
+  bool scoring = false;
   bool clawLiftOn = false;
   bool brainTimerOn = false;
   bool liftOn = false;
@@ -280,8 +281,18 @@ void usercontrol(void) {
       Clawlift.stop();
       Clawlift.setPosition(0, degrees);
       brainTimerOn = false;
+      scoring = false;
     }
-
+    if (runningSequence == true && Lift.position(degrees) < 145.0){
+        Lift.setStopping(hold);
+        Brain.Timer.clear();
+        brainTimerOn = true;
+        Clawlift.spin(reverse);
+        Claw.stop();
+        Intake.stop();
+        Clawlift.setStopping(coast);
+        runningSequence = false;
+    }
     if (scoringUsed == false){
       if(!Controller1.ButtonL1.pressing() && buttonL1Pressed){
         buttonL1Pressed = false;
@@ -293,11 +304,13 @@ void usercontrol(void) {
       }
       if(Controller1.ButtonL1.pressing() && !intakeOn && !buttonL1Pressed){
         buttonL1Pressed = true;
+        Claw.spin(forward);
         Intake.spin(forward);
         intakeOn = true;
       } else if(Controller1.ButtonL1.pressing() && intakeOn && !buttonL1Pressed){
         buttonL1Pressed = true;
         Intake.stop();
+        Claw.stop();
         intakeOn = false;
       } else if(Controller1.ButtonL2.pressing() && intakeOn && !buttonL2Pressed){
         buttonL2Pressed = true;
@@ -305,9 +318,10 @@ void usercontrol(void) {
         buttonL1Pressed = true;
       }
     
-      if (Controller1.ButtonR2.pressing() && !brainTimerOn){
-        Intake.stop();
+      if (Controller1.ButtonR2.pressing() && !brainTimerOn && !scoring){
         scoringUsed = true;
+        buttonL1Pressed = false;
+        intakeOn = false;
         Clawlift.setStopping(hold);
         Clawlift.spinToPosition(540, degrees, false);
         Claw.spin(forward);
@@ -338,12 +352,15 @@ void usercontrol(void) {
         Lift.spin(forward);
         liftOn = true;
       } else if (Controller1.ButtonR1.pressing() && liftOn == false){
+        Intake.stop();
         if (Lift.position(degrees) > 5){
           Lift.spin(reverse);
           liftOn = true;
         } 
      }
      if (Controller1.ButtonX.pressing()){
+       scoring = true;
+       scoringUsed = false;
        chassis.drive_with_voltage(0.0, 0.0);
        Claw.spin(reverse);
        wait(0.4, seconds);
@@ -364,20 +381,11 @@ void usercontrol(void) {
       }
 
       if (Controller1.ButtonA.pressing()){
+        scoring = true;
+        scoringUsed = false;
         Lift.spinToPosition(140.0, degrees, false);
         runningSequence = true;
       } 
-      if (runningSequence == true && Lift.position(degrees) < 145.0){
-        Lift.setStopping(hold);
-        Brain.Timer.clear();
-        brainTimerOn = true;
-        Clawlift.spin(reverse);
-        Claw.stop();
-        Intake.stop();
-        Clawlift.setStopping(coast);
-        runningSequence = false;
-        scoringUsed = false;
-      }
     }
 
     vex::wait(20, msec); // Sleep the task for a short amount of time to
