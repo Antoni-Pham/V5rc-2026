@@ -285,7 +285,7 @@ bool intakeOn = false;
     //Replace this line with chassis.control_tank(); for tank drive 
     //or chassis.control_holonomic(); for holo drive.
     chassis.control_arcade();
-    wait(20, msec); // Sleep the task for a short amount of time to
+    vex::wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
 }
@@ -303,6 +303,6 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
-    wait(100, msec);
+    vex::wait(100, msec);
   }
 }
