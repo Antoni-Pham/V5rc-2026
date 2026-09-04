@@ -264,14 +264,12 @@ void usercontrol(void) {
   Intake.setVelocity(100.0, percent);
   Intake.setStopping(coast);
 
-  Lift.spinToPosition(140.0, degrees, true);
+  Lift.spinToPosition(120.0, degrees, true);
   Clawlift.spin(reverse);
   Claw.stop();
   Intake.stop();
   Clawlift.setStopping(coast);
-  wait(1.5, seconds);
-  Clawlift.stop();
-  Clawlift.setPosition(0, degrees);
+  brainTimerOn = true;
           while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -384,14 +382,14 @@ void usercontrol(void) {
        chassis.drive_with_voltage(3.0, 3.0);
        wait(0.2, seconds);
        chassis.drive_with_voltage(0.0, 0.0);
-       Lift.spinToPosition(140.0, degrees, false);
+       Lift.spinToPosition(130.0, degrees, false);
        runningSequence = true;
       }
 
       if (Controller1.ButtonA.pressing()){
         scoring = true;
         scoringUsed = false;
-        Lift.spinToPosition(140.0, degrees, false);
+        Lift.spinToPosition(130.0, degrees, false);
         runningSequence = true;
       } 
     }
