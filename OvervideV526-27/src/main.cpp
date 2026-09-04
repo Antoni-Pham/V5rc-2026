@@ -121,7 +121,7 @@ void pre_auton() {
   while(chassis.Gyro.isCalibrating()){
     vex::this_thread::sleep_for(10);
   }
-  current_auton_selection = 1;
+  current_auton_selection = 3;
   while(!auto_started){
     Brain.Screen.clearScreen();
     Brain.Screen.printAt(5, 20, "JAR Template v1.2.0");
@@ -141,13 +141,13 @@ void pre_auton() {
         Brain.Screen.printAt(5, 140, "Auton red2 blue2");
         break;
       case 3:
-        Brain.Screen.printAt(5, 140, "Auton 4");
+        Brain.Screen.printAt(5, 140, "Auton red1 blue1 and pin");
         break;
       case 4:
-        Brain.Screen.printAt(5, 140, "Auton 5");
+        Brain.Screen.printAt(5, 140, "Auton red2 blue2 and pin");
         break;
       case 5:
-        Brain.Screen.printAt(5, 140, "Auton 6");
+        Brain.Screen.printAt(5, 140, "Auton red1 blue1 and pin and center");
         break;
       case 6:
         Brain.Screen.printAt(5, 140, "Auton 7");
@@ -186,13 +186,13 @@ void autonomous(void) {
       Red2Blue2Auto();
       break;
     case 3:
-      swing_test();
+      Red1Blue1AutoandPin();
       break;
     case 4:
-      full_test();
+      Red2Blue2AutoandPin();
       break;
     case 5:
-      odom_test();
+      Red1Blue1AutoandPinandCenter();
       break;
     case 6:
       tank_odom_test();
@@ -252,6 +252,7 @@ void usercontrol(void) {
   bool intakeOn = false;
   bool scoringUsed = false;
   bool runningSequence = false;
+
   Lift.setStopping(hold);
   Lift.setVelocity(80.0, percent);
   Lift.setMaxTorque(100.0, percent);
@@ -263,7 +264,15 @@ void usercontrol(void) {
   Intake.setVelocity(100.0, percent);
   Intake.setStopping(coast);
 
-  while (1) {
+  Lift.spinToPosition(140.0, degrees, true);
+  Clawlift.spin(reverse);
+  Claw.stop();
+  Intake.stop();
+  Clawlift.setStopping(coast);
+  wait(1.5, seconds);
+  Clawlift.stop();
+  Clawlift.setPosition(0, degrees);
+          while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
@@ -284,7 +293,6 @@ void usercontrol(void) {
       scoring = false;
     }
     if (runningSequence == true && Lift.position(degrees) < 145.0){
-        Lift.setStopping(hold);
         Brain.Timer.clear();
         brainTimerOn = true;
         Clawlift.spin(reverse);
