@@ -329,6 +329,7 @@ void usercontrol(void) {
         scoringUsed = true;
         buttonL1Pressed = false;
         intakeOn = false;
+        Lift.spinToPosition(135.0, degrees, false);
         Clawlift.setStopping(hold);
         Clawlift.spinToPosition(540, degrees, false);
         Claw.spin(forward);
