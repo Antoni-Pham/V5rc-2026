@@ -297,7 +297,7 @@ void usercontrol(void) {
         Clawlift.spin(reverse);
         Claw.stop();
         Intake.stop();
-        Clawlift.setStopping(coast);
+        Clawlift.setStopping(hold);
         runningSequence = false;
     }
     if (scoringUsed == false){
@@ -384,6 +384,7 @@ void usercontrol(void) {
        wait(0.2, seconds);
        chassis.drive_with_voltage(0.0, 0.0);
        Lift.spinToPosition(105.0, degrees, false);
+
        runningSequence = true;
       }
 
