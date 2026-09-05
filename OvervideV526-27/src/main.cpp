@@ -121,7 +121,7 @@ void pre_auton() {
   while(chassis.Gyro.isCalibrating()){
     vex::this_thread::sleep_for(10);
   }
-  current_auton_selection = 3;
+  current_auton_selection = 1;
   while(!auto_started){
     Brain.Screen.clearScreen();
     Brain.Screen.printAt(5, 20, "JAR Template v1.2.0");
@@ -264,11 +264,12 @@ void usercontrol(void) {
   Intake.setVelocity(100.0, percent);
   Intake.setStopping(coast);
 
-  Lift.spinToPosition(120.0, degrees, true);
+  Lift.spinToPosition(135.0, degrees, true);
   Clawlift.spin(reverse);
   Claw.stop();
   Intake.stop();
-  Clawlift.setStopping(coast);
+  Clawlift.setStopping(hold);
+  Brain.Timer.clear();
   brainTimerOn = true;
           while (1) {
     // This is the main execution loop for the user control program.
@@ -318,7 +319,7 @@ void usercontrol(void) {
         Intake.stop();
         Claw.stop();
         intakeOn = false;
-      } else if(Controller1.ButtonL2.pressing() && intakeOn && !buttonL2Pressed){
+      } else if(Controller1.ButtonL2.pressing() && !buttonL2Pressed){
         buttonL2Pressed = true;
         Intake.spin(reverse);
         buttonL1Pressed = true;
@@ -382,14 +383,14 @@ void usercontrol(void) {
        chassis.drive_with_voltage(3.0, 3.0);
        wait(0.2, seconds);
        chassis.drive_with_voltage(0.0, 0.0);
-       Lift.spinToPosition(130.0, degrees, false);
+       Lift.spinToPosition(105.0, degrees, false);
        runningSequence = true;
       }
 
       if (Controller1.ButtonA.pressing()){
         scoring = true;
         scoringUsed = false;
-        Lift.spinToPosition(130.0, degrees, false);
+        Lift.spinToPosition(105.0, degrees, false);
         runningSequence = true;
       } 
     }
