@@ -109,7 +109,7 @@ void Red2Blue2Auto(){
   chassis.drive_distance(-5);
   chassis.drive_with_voltage(10,10);
   vex::wait(400,msec);
-  chassis.drive_distance(-16);
+  chassis.drive_distance(-17);
   //Score yellow prelaod
   chassis.turn_to_angle(270);
   chassis.drive_with_voltage(-8,-8);
@@ -125,16 +125,16 @@ void Red2Blue2Auto(){
 void Red1Blue1AutoandPin(){
   Red1Blue1Auto();
   Lift.spinToPosition(650,degrees,false);
-  chassis.drive_distance(7.5);
+  chassis.drive_distance(8.7);
   chassis.turn_to_angle(40);
   Clawlift.spinToPosition(490,degrees,true);
   Claw.spin(forward);
   chassis.drive_with_voltage(-7,-7); 
-  wait(300,msec);
+  wait(280,msec);
   chassis.drive_with_voltage(-5,-5); 
   wait(200,msec);
   chassis.drive_with_voltage(-2,-2);
-  wait(800,msec);
+  wait(820,msec);
   chassis.drive_with_voltage(4, 4);
   wait(100,msec);
   chassis.drive_stop(coast);
@@ -144,7 +144,7 @@ void Red1Blue1AutoandPin(){
   wait(600,msec);
   Clawlift.spinToPosition(440,degrees, false);
   Lift.spinToPosition(1000,degrees,true);
-  chassis.drive_distance(6);
+  chassis.drive_distance(10);
   Clawlift.spinToPosition(445,degrees,true);
   chassis.turn_to_angle(135);
   chassis.drive_with_voltage(-7,-7); 
@@ -155,23 +155,21 @@ void Red1Blue1AutoandPin(){
   wait(500,msec);
   Lift.spinToPosition(1500,degrees,false);
   Claw.stop();
-  chassis.drive_with_voltage(4,4);
-  wait(300,msec);
-  chassis.drive_stop(coast);
+  wait(500, msec);
 }
 void Red2Blue2AutoandPin(){
   Red2Blue2Auto();
   Lift.spinToPosition(650,degrees,false);
-  chassis.drive_distance(6.7);
+  chassis.drive_distance(7.5);
   chassis.turn_to_angle(320);
   Clawlift.spinToPosition(490,degrees,true);
   Claw.spin(forward);
   chassis.drive_with_voltage(-7,-7); 
-  wait(200,msec);
+  wait(250,msec);
   chassis.drive_with_voltage(-5,-5); 
-  wait(100,msec);
+  wait(105,msec);
   chassis.drive_with_voltage(-1.4,-1.4);
-  wait(700,msec);
+  wait(870,msec);
   chassis.drive_with_voltage(4, 4);
   wait(100,msec);
   chassis.drive_stop(coast);
@@ -192,9 +190,7 @@ void Red2Blue2AutoandPin(){
   wait(500,msec);
   Lift.spinToPosition(1500,degrees,false);
   Claw.stop();
-  chassis.drive_with_voltage(4,4); 
-  wait(300,msec);
-  chassis.drive_stop(coast);
+  wait(500, msec);
 }
 void Red1Blue1AutoandPinandCenter(){
   Red1Blue1AutoandPin();

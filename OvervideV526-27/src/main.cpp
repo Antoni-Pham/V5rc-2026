@@ -121,7 +121,7 @@ void pre_auton() {
   while(chassis.Gyro.isCalibrating()){
     vex::this_thread::sleep_for(10);
   }
-  current_auton_selection = 1;
+  current_auton_selection = 5;
   while(!auto_started){
     Brain.Screen.clearScreen();
     Brain.Screen.printAt(5, 20, "JAR Template v1.2.0");
@@ -181,15 +181,27 @@ void autonomous(void) {
       break;
     case 1:         
       Red1Blue1Auto();
+      chassis.drive_with_voltage(4,4); 
+  wait(300,msec);
+  chassis.drive_stop(coast);
       break;
     case 2:
       Red2Blue2Auto();
+      chassis.drive_with_voltage(4,4); 
+  wait(300,msec);
+  chassis.drive_stop(coast);
       break;
     case 3:
       Red1Blue1AutoandPin();
+      chassis.drive_with_voltage(4,4); 
+  wait(300,msec);
+  chassis.drive_stop(coast);
       break;
     case 4:
       Red2Blue2AutoandPin();
+      chassis.drive_with_voltage(4,4); 
+  wait(300,msec);
+  chassis.drive_stop(coast);
       break;
     case 5:
       Red1Blue1AutoandPinandCenter();
@@ -243,6 +255,7 @@ void usercontrol(void) {
 //       holonomic_odom_test();
 //       break;
 //  }
+  bool buttonUpPressed = false;
   bool scoring = false;
   bool clawLiftOn = false;
   bool brainTimerOn = false;
@@ -301,11 +314,27 @@ void usercontrol(void) {
         runningSequence = false;
     }
     if (scoringUsed == false){
+      if(!Controller1.ButtonUp.pressing() && buttonUpPressed){
+        if(intakeOn){
+          Claw.spin(forward);
+        } else {
+          Claw.stop();
+        }
+        buttonUpPressed = false;
+      }
+      if(Controller1.ButtonUp.pressing() && !buttonUpPressed){
+        buttonUpPressed = true;
+        Claw.spin(reverse);
+      }
       if(!Controller1.ButtonL1.pressing() && buttonL1Pressed){
         buttonL1Pressed = false;
       }
       if(!Controller1.ButtonL2.pressing() && buttonL2Pressed){
-        Intake.spin(forward);
+        if(intakeOn){
+          Intake.spin(forward);
+        } else {
+          Intake.stop();
+        }
         buttonL1Pressed = false;
         buttonL2Pressed = false;
       }
