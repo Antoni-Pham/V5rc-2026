@@ -64,6 +64,36 @@ void drive_test(){
   chassis.drive_distance(-36);
 }
 
+void OdomAuto(){
+  // chassis.set_coordinates(-61.5, -5.25, 0);
+  Lift.setVelocity(80,percent);
+  Clawlift.setVelocity(80,percent);
+  Clawlift.setPosition(0,degrees);
+  Lift.setPosition(0,degrees);
+  Claw.setVelocity(100, percent);
+  Lift.spinToPosition(100,degrees,false);
+  Claw.spin(forward);
+  Clawlift.spinToPosition(430, degrees,false);
+  //setup drive and toggle
+  chassis.drive_distance(-4);
+  chassis.drive_with_voltage(10,10);
+  Lift.spinToPosition(0,degrees,false);
+  vex::wait(500,msec);
+  chassis.drive_distance(-5);
+  chassis.drive_with_voltage(10,10);
+  vex::wait(300,msec);
+  chassis.set_coordinates(-63, -5.25, 270);
+  vex::wait(100,msec);
+  chassis.turn_to_point(-74,18);
+  chassis.drive_to_point(-60,-12);
+  chassis.drive_with_voltage(-8,-8);
+  wait(200,msec);
+  chassis.drive_with_voltage(-2,-2);
+  Claw.spin(reverse);
+  wait(800,msec);
+  Claw.stop();
+}
+
 void Red1Blue1Auto(){
   Lift.setVelocity(80,percent);
   Clawlift.setVelocity(80,percent);
@@ -408,10 +438,23 @@ void odom_test(){
 void tank_odom_test(){
   odom_constants();
   chassis.set_coordinates(0, 0, 0);
+  this_thread::sleep_for(1500);
   chassis.turn_to_point(24, 24);
+  this_thread::sleep_for(1500);
   chassis.drive_to_point(24,24);
+  chassis.drive_stop(hold);
+  this_thread::sleep_for(1500);
   chassis.drive_to_point(0,0);
+  chassis.drive_stop(hold);
+  this_thread::sleep_for(2500);
   chassis.turn_to_angle(0);
+  Brain.Screen.clearScreen();
+    Brain.Screen.printAt(5,20, "X: %f", chassis.get_X_position());
+    Brain.Screen.printAt(5,40, "Y: %f", chassis.get_Y_position());
+    Brain.Screen.printAt(5,60, "Heading: %f", chassis.get_absolute_heading());
+    Brain.Screen.printAt(5,80, "ForwardTracker: %f", chassis.get_ForwardTracker_position());
+    Brain.Screen.printAt(5,100, "SidewaysTracker: %f", chassis.get_SidewaysTracker_position());
+
 }
 
 /**

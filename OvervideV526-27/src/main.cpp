@@ -37,7 +37,9 @@ Drive chassis(
 //HOLONOMIC_TWO_ROTATION
 //
 //Write it here:
-ZERO_TRACKER_NO_ODOM,
+TANK_ONE_SIDEWAYS_ROTATION
+//ZERO_TRACKER_ODOM
+,
 
 //Add the names of your Drive motors into the motor groups below, separated by commas, i.e. motor_group(Motor1,Motor2,Motor3).
 //You will input whatever motor names you chose when you configured your robot using the sidebar configurer, they don't have to be "Motor1" and "Motor2".
@@ -93,13 +95,13 @@ PORT22,     -PORT22,
 6.0625,
 
 //Input the Sideways Tracker Port, following the same steps as the Forward Tracker Port:
-1,
+PORT5,
 
 //Sideways tracker diameter (reverse to make the direction switch):
--2.75,
+-2.79,
 
 //Sideways tracker center distance (positive distance is behind the center of the robot, negative is in front):
-5.5
+1.5
 
 );
 
@@ -121,15 +123,16 @@ void pre_auton() {
   while(chassis.Gyro.isCalibrating()){
     vex::this_thread::sleep_for(10);
   }
-  current_auton_selection = 5;
+  current_auton_selection = 7;
+  chassis.set_coordinates(0, 0, 0);
+  //odom_test();
   while(!auto_started){
+    //chassis.drive_to_point(0,0);
     Brain.Screen.clearScreen();
     Brain.Screen.printAt(5, 20, "JAR Template v1.2.0");
     Brain.Screen.printAt(5, 40, "Battery Percentage:");
     Brain.Screen.printAt(5, 60, "%d", Brain.Battery.capacity());
-    Brain.Screen.printAt(5, 80, "Chassis Heading Reading:");
-    Brain.Screen.printAt(5, 100, "%f", chassis.get_absolute_heading());
-    Brain.Screen.printAt(5, 120, "Selected Auton:");
+    Brain.Screen.printAt(5, 200, "Selected Auton:");
     switch(current_auton_selection){
       case 0:
         
@@ -207,10 +210,10 @@ void autonomous(void) {
       Red1Blue1AutoandPinandCenter();
       break;
     case 6:
-      tank_odom_test();
+      OdomAuto();
       break;
     case 7:
-      holonomic_odom_test();
+      tank_odom_test();
       break;
  }
 }
@@ -285,6 +288,7 @@ void usercontrol(void) {
   Brain.Timer.clear();
   brainTimerOn = true;
           while (1) {
+            
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.

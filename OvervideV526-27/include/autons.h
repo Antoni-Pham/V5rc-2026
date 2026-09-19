@@ -20,6 +20,7 @@ void holonomic_odom_test();
 void Red1Blue1AutoandPin();
 void Red2Blue2AutoandPin();
 //void InsideScore2yellow();
+void OdomAuto();
 void Red1Blue1Auto();
 void Red2Blue2Auto();
 void Red1Blue1AutoandPinandCenter();
