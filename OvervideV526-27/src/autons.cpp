@@ -18,13 +18,13 @@ void default_constants(){
   // 0-p 0, 16, 0);
   //90degrees
   
-  chassis.set_drive_constants(10, 1.1, 0, 6.5, 0);
+  chassis.set_drive_constants(9, 1.2, 0, 6.5, 0);
   chassis.set_heading_constants(0.5, 0.5, 0, 1.1, 0);
   chassis.set_turn_constants(12.7, .3, 0, 1.3, 0);
   chassis.set_swing_constants(12, .3, .001, 2, 15);
 
   // Each exit condition set is in the form of (sett  le_error, settle_time, timeout).
-  chassis.set_drive_exit_conditions(1, 50, 5000);
+  chassis.set_drive_exit_conditions(4, 50, 5000);
   chassis.set_turn_exit_conditions(2, 50, 1000); 
   chassis.set_swing_exit_conditions(1, 50, 3000);
 }
@@ -39,7 +39,7 @@ void odom_constants(){
   default_constants();
   chassis.heading_max_voltage = 10;
   chassis.drive_max_voltage = 8;
-  chassis.drive_settle_error = 3;
+  chassis.drive_settle_error = 0.5;
   chassis.boomerang_lead = .5;
   chassis.drive_min_voltage = 0;
 }
@@ -58,14 +58,12 @@ void far_score(){
 }
 
 void drive_test(){
-  chassis.drive_distance(6);
-  chassis.drive_distance(12);
-  chassis.drive_distance(18);
-  chassis.drive_distance(-36);
+  chassis.drive_distance(24);
 }
 
 void OdomAuto(){
-  // chassis.set_coordinates(-61.5, -5.25, 0);
+  odom_constants();
+  chassis.set_coordinates(-61.5, -5.25, 270);
   Lift.setVelocity(80,percent);
   Clawlift.setVelocity(80,percent);
   Clawlift.setPosition(0,degrees);
@@ -81,13 +79,11 @@ void OdomAuto(){
   vex::wait(500,msec);
   chassis.drive_distance(-5);
   chassis.drive_with_voltage(10,10);
-  vex::wait(300,msec);
+  vex::wait(200,msec);
   chassis.set_coordinates(-63, -5.25, 270);
   vex::wait(100,msec);
-  chassis.turn_to_point(-74,18);
-  chassis.drive_to_point(-60,-12);
-  chassis.drive_with_voltage(-8,-8);
-  wait(200,msec);
+  chassis.turn_to_point(-74,16);
+  chassis.drive_to_point(-48,-24);
   chassis.drive_with_voltage(-2,-2);
   Claw.spin(reverse);
   wait(800,msec);

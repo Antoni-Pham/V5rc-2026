@@ -101,7 +101,7 @@ PORT5,
 -2.79,
 
 //Sideways tracker center distance (positive distance is behind the center of the robot, negative is in front):
-1.5
+1.4
 
 );
 
@@ -123,9 +123,9 @@ void pre_auton() {
   while(chassis.Gyro.isCalibrating()){
     vex::this_thread::sleep_for(10);
   }
-  current_auton_selection = 7;
+  current_auton_selection = 6;
   chassis.set_coordinates(0, 0, 0);
-  //odom_test();
+  odom_test();
   while(!auto_started){
     //chassis.drive_to_point(0,0);
     Brain.Screen.clearScreen();
@@ -183,7 +183,7 @@ void autonomous(void) {
       
       break;
     case 1:         
-      Red1Blue1Auto();
+      OdomAuto();
       chassis.drive_with_voltage(4,4); 
   wait(300,msec);
   chassis.drive_stop(coast);
