@@ -24,7 +24,7 @@ void default_constants(){
   chassis.set_swing_constants(12, .3, .001, 2, 15);
 
   // Each exit condition set is in the form of (sett  le_error, settle_time, timeout).
-  chassis.set_drive_exit_conditions(4, 50, 5000);
+  chassis.set_drive_exit_conditions(1, 50, 5000);
   chassis.set_turn_exit_conditions(2, 50, 1000); 
   chassis.set_swing_exit_conditions(1, 50, 3000);
 }
@@ -63,7 +63,12 @@ void drive_test(){
 
 void OdomAuto(){
   odom_constants();
-  chassis.set_coordinates(-61.5, -5.25, 270);
+  //chassis.set_coordinates(-61.5, -5.25, 270);
+  //chassis.set_coordinates(-6.5, -62.5, 180);
+  chassis.set_coordinates(0, -48, 180);
+  // Controller1.Screen.print("X: %f", 2*chassis.get_X_position() + 24);
+  // Controller1.Screen.print("Y: %f", 2*chassis.get_Y_position() + 48);
+  // chassis.turn_to_point(0,0);
   Lift.setVelocity(80,percent);
   Clawlift.setVelocity(80,percent);
   Clawlift.setPosition(0,degrees);
@@ -73,21 +78,33 @@ void OdomAuto(){
   Claw.spin(forward);
   Clawlift.spinToPosition(430, degrees,false);
   //setup drive and toggle
-  chassis.drive_distance(-4);
-  chassis.drive_with_voltage(10,10);
-  Lift.spinToPosition(0,degrees,false);
-  vex::wait(500,msec);
-  chassis.drive_distance(-5);
-  chassis.drive_with_voltage(10,10);
-  vex::wait(200,msec);
-  chassis.set_coordinates(-63, -5.25, 270);
-  vex::wait(100,msec);
-  chassis.turn_to_point(-74,16);
-  chassis.drive_to_point(-48,-24);
+  // chassis.drive_distance(-4);
+  // chassis.drive_with_voltage(10,10);
+  // Lift.spinToPosition(0,degrees,false);
+  // vex::wait(500,msec);
+  // chassis.drive_distance(-5);
+  // chassis.drive_with_voltage(10,10);
+  // vex::wait(200,msec);
+  // chassis.set_coordinates(-6.5, -62.5, 180);
+  // vex::wait(100,msec);
+  //chassis.drive_distance(-5);
+  chassis.turn_to_point(2*chassis.get_X_position() + 24, 2*chassis.get_Y_position() + 48);
+  //chassis.turn_to_point(-24, -48, 180);
+  chassis.drive_stop(hold);
+  vex::wait(10000,msec);
+  //chassis.drive_to_point(-48,-24, 0, 4, 10, 0.5, 50, 1500);
+  //chassis.drive_to_point(-24,-48, 0, 4, 10, 0.5, 50, 1500);
+  chassis.drive_to_point(-24,-48, 0, 4, 10, 0.5, 50, 500);
   chassis.drive_with_voltage(-2,-2);
+  wait(300,msec);
   Claw.spin(reverse);
-  wait(800,msec);
+  wait(400,msec);
   Claw.stop();
+  chassis.drive_distance(4);
+  chassis.turn_to_point(-54, 0);
+  chassis.drive_to_point(-54, 0);
+  chassis.turn_to_point(-72, 24);
+  chassis.drive_to_point(-24, -24);
 }
 
 void Red1Blue1Auto(){
@@ -434,15 +451,15 @@ void odom_test(){
 void tank_odom_test(){
   odom_constants();
   chassis.set_coordinates(0, 0, 0);
-  this_thread::sleep_for(1500);
+  //this_thread::sleep_for(1500);
   chassis.turn_to_point(24, 24);
-  this_thread::sleep_for(1500);
+  //this_thread::sleep_for(1500);
   chassis.drive_to_point(24,24);
   chassis.drive_stop(hold);
-  this_thread::sleep_for(1500);
+  //this_thread::sleep_for(1500);
   chassis.drive_to_point(0,0);
   chassis.drive_stop(hold);
-  this_thread::sleep_for(2500);
+  //this_thread::sleep_for(2500);
   chassis.turn_to_angle(0);
   Brain.Screen.clearScreen();
     Brain.Screen.printAt(5,20, "X: %f", chassis.get_X_position());
